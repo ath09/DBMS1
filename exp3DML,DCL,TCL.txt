@@ -1,0 +1,80 @@
+CREATE TABLE Students (
+    s_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    dept VARCHAR(50),
+    marks INT,
+    city VARCHAR(50)
+);
+
+-- INSERT
+INSERT INTO Students VALUES (1, 'AMIT', 'COMPUTER', 85, 'PUNE');
+INSERT INTO Students VALUES (2, 'SAHIL', 'COMPUTER', 85, 'TARADGAON');
+INSERT INTO Students VALUES (3, 'TEJAS', 'COMPUTER', 80, 'MOHI');
+
+-- UPDATE
+UPDATE Students
+SET name = 'ABHI'
+WHERE s_id = 1;
+
+-- DELETE
+DELETE FROM Students
+WHERE name = 'ABHI';
+
+-- PATTERN MATCHING
+SELECT * FROM Students
+WHERE name LIKE 'S%';
+
+-- UNION
+SELECT city FROM Students
+UNION
+SELECT dept FROM Students;
+
+-- STRING FUNCTIONS
+SELECT LOWER(name) FROM Students;
+SELECT LENGTH(name) FROM Students;
+
+-- CREATE USER
+CREATE USER 'user1'@'localhost'
+IDENTIFIED BY 'Pass@1008';
+
+-- GRANT PERMISSION
+GRANT SELECT, INSERT
+ON Student.Students
+TO 'user1'@'localhost';
+
+-- REVOKE PERMISSION
+REVOKE INSERT
+ON Student.Students
+FROM 'user1'@'localhost';
+
+-- CREATE ROLE
+CREATE ROLE 'stud_role';
+
+-- GRANT ROLE
+GRANT SELECT
+ON Student.Students
+TO 'stud_role';
+
+GRANT 'stud_role'
+TO 'user1'@'localhost';
+
+-- START TRANSACTION
+START TRANSACTION;
+
+-- INSERT NEW RECORD
+INSERT INTO Students
+VALUES (4, 'RAM', 'IT', 90, 'MUMBAI');
+
+-- SAVEPOINT
+SAVEPOINT sp1;
+
+-- UPDATE RECORD
+UPDATE Students
+SET marks = marks + 5
+WHERE s_id = 2;
+
+-- ROLLBACK
+ROLLBACK TO sp1;
+
+-- COMMIT
+COMMIT;
