@@ -1,0 +1,54 @@
+CREATE TABLE emp (
+    E_id INT PRIMARY KEY,
+    E_Name VARCHAR(40),
+    Department VARCHAR(50),
+    Salary INT
+);
+
+INSERT INTO emp (E_id, E_Name, Department, Salary) VALUES
+(1, 'ATHARV', 'COMPUTER', 40000),
+(2, 'AVDUTH', 'COMPUTER', 60000),
+(3, 'SHIV', 'COMPUTER', 70000),
+(4, 'NILESH', 'COMPUTER', 80000);
+
+SELECT * FROM emp;
+
+-- COUNT Function
+SELECT COUNT(*) AS E_Name
+FROM emp;
+
+-- SUM Function
+SELECT SUM(Salary) AS Salary
+FROM emp;
+
+-- AVG Function
+SELECT AVG(Salary) AS Salary
+FROM emp;
+
+-- MAX Function
+SELECT MAX(Salary) AS Salary
+FROM emp;
+
+-- MIN Function
+SELECT MIN(Salary) AS Salary
+FROM emp;
+
+-- GROUP BY Clause
+SELECT Department, AVG(Salary) AS Salary
+FROM emp
+GROUP BY Department;
+
+SELECT Department, COUNT(*) AS E_Name
+FROM emp
+GROUP BY Department;
+
+-- HAVING Clause
+SELECT E_Name, AVG(Salary) AS Salary
+FROM emp
+GROUP BY E_Name
+HAVING AVG(Salary) > 50000;
+
+SELECT E_Name, AVG(Salary) AS Salary
+FROM emp
+GROUP BY E_Name
+HAVING AVG(Salary) BETWEEN 50000 AND 80000;
