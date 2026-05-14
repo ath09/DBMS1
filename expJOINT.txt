@@ -1,0 +1,76 @@
+CREATE TABLE Dept (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    salary INT,
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Dept(dept_id)
+);
+
+INSERT INTO Dept VALUES
+(1, 'HR'),
+(2, 'IT'),
+(3, 'Finance');
+
+INSERT INTO Employee VALUES
+(101, 'Sahil', 60000, 1),
+(102, 'Tejas', 40000, 2),
+(103, 'Samarth', 50000, 2),
+(104, 'Abhi', 45000, NULL);
+
+-- INNER JOIN
+SELECT e.emp_name, d.dept_name
+FROM Employee e
+INNER JOIN Dept d
+ON e.dept_id = d.dept_id;
+
+-- LEFT JOIN
+SELECT e.emp_name, d.dept_name
+FROM Employee e
+LEFT JOIN Dept d
+ON e.dept_id = d.dept_id;
+
+-- RIGHT JOIN
+SELECT e.emp_name, d.dept_name
+FROM Employee e
+RIGHT JOIN Dept d
+ON e.dept_id = d.dept_id;
+
+-- FULL JOIN
+SELECT e.emp_name, d.dept_name
+FROM Employee e
+LEFT JOIN Dept d
+ON e.dept_id = d.dept_id
+
+UNION
+
+SELECT e.emp_name, d.dept_name
+FROM Employee e
+RIGHT JOIN Dept d
+ON e.dept_id = d.dept_id;
+
+-- SELF JOIN
+SELECT A.emp_name AS Employee1, B.emp_name AS Employee2
+FROM Employee A, Employee B
+WHERE A.dept_id = B.dept_id
+AND A.emp_id <> B.emp_id;
+
+-- CREATE VIEW
+CREATE VIEW emp_view AS
+SELECT emp_name, salary
+FROM Employee;
+
+SELECT * FROM emp_view;
+
+-- UPDATE VIEW
+CREATE OR REPLACE VIEW emp_view AS
+SELECT emp_name, salary
+FROM Employee
+WHERE salary > 50000;
+
+-- DROP VIEW
+DROP VIEW emp_view;
