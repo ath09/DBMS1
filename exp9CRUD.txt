@@ -1,0 +1,43 @@
+// 1. Use Database
+use companyDB
+
+// 2. Insert Single Record
+db.employee.insertOne({
+    emp_id: 101,
+    name: "Sahil",
+    salary: 50000,
+    dept: "IT"
+})
+
+// 3. Insert Multiple Records
+db.employee.insertMany([
+    {emp_id: 102, name: "Tejas", salary: 60000, dept: "HR"},
+    {emp_id: 103, name: "Samarth", salary: 55000, dept: "IT"},
+    {emp_id: 104, name: "Dipraj", salary: 45000, dept: "Finance"}
+])
+
+// 4. Read Data
+db.employee.find().pretty()
+
+// 5. Filter Data
+db.employee.find({dept: "IT"})
+
+// 6. Use Logical Operators
+db.employee.find({
+    $and: [
+        {salary: {$gt: 50000}},
+        {dept: "IT"}
+    ]
+})
+
+// 7. Update Data
+db.employee.updateOne(
+    {emp_id: 101},
+    {$set: {salary: 52000}}
+)
+
+// 8. Delete Data
+db.employee.deleteOne({emp_id: 104})
+
+// 9. Show Collections
+show collections
