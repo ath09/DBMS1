@@ -1,0 +1,57 @@
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+CREATE TABLE Department (
+    Dept_ID INT PRIMARY KEY,
+    Dept_Name VARCHAR(50) NOT NULL UNIQUE
+);
+
+INSERT INTO Department VALUES
+(1, 'Computer'),
+(2, 'Mechanical'),
+(3, 'Civil');
+
+SELECT * FROM Department;
+
+CREATE TABLE Student (
+    Stud_ID INT PRIMARY KEY,
+    Stud_Name VARCHAR(50) NOT NULL,
+    Age INT CHECK (Age >= 18),
+    Email VARCHAR(100) UNIQUE,
+    Dept_ID INT,
+    FOREIGN KEY (Dept_ID)
+    REFERENCES Department(Dept_ID)
+);
+
+INSERT INTO Student VALUES
+(101, 'Atharv', 20, 'ath@gmail.com', 1),
+(102, 'Rahul', 21, 'rahul@gmail.com', 2),
+(103, 'Anish', 21, 'anish@gmail.com', 3);
+
+SELECT * FROM Student;
+
+ALTER TABLE Student
+ADD Phone VARCHAR(15);
+
+SELECT * FROM Student;
+
+ALTER TABLE Student
+MODIFY Stud_Name VARCHAR(100);
+
+SELECT * FROM Student;
+
+RENAME TABLE Student TO College_Student;
+
+SHOW TABLES;
+
+   (TABLE AHE)
+
+TRUNCATE TABLE College_Student;
+
+SELECT * FROM College_Student;
+
+DROP TABLE College_Student;
+
+
+
