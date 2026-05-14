@@ -1,0 +1,164 @@
+
+
+
+
+-- Step 3 : Create Employee Table
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    salary INT,
+    dept_id INT
+);
+
+-- Step 4 : Insert Sample Records
+INSERT INTO Employee VALUES
+(1, 'Amit', 25000, 101),
+(2, 'Neha', 30000, 102),
+(3, 'Rahul', 28000, 103),
+(4, 'Priya', 35000, 101),
+(5, 'Karan', 40000, 102);
+
+-- =========================================
+-- 1. Stored Procedure using Cursor
+-- =========================================
+
+DELIMITER //
+
+CREATE PROCEDURE emp_cursor_demo()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE e_name VARCHAR(50);
+
+    DECLARE emp_cursor CURSOR FOR
+        SELECT emp_name FROM Employee;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+        SET done = 1;
+
+    OPEN emp_cursor;
+
+    read_loop: LOOP
+
+        FETCH emp_cursor INTO e_name;
+
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+
+        SELECT e_name AS Employee_Name;
+
+    END LOOP;
+
+    CLOSE emp_cursor;
+
+END //
+
+DELIMITER ;
+
+-- =========================================
+-- Execute Stored Procedure
+-- =========================================
+
+CALL emp_cursor_demo();
+
+
+DELIMITER //
+
+CREATE PROCEDURE total_salary()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE sal INT;
+    DECLARE total INT DEFAULT 0;
+
+    DECLARE cur CURSOR FOR
+        SELECT salary FROM Employee;
+
+   
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+        SET done = 1;
+
+   
+    OPEN cur;
+
+    read_loop: LOOP
+
+      
+        FETCH cur INTO sal;
+
+       
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+
+     
+        SET total = total + sal;
+
+    END LOOP;
+
+   
+    CLOSE cur;
+
+   
+    SELECT total AS Total_Salary;
+
+END //
+
+DELIMITER ;
+
+-- =========================================
+-- Execute Procedure
+-- =========================================
+
+CALL total_salary();
+
+DELIMITER //
+
+CREATE FUNCTION get_total_salary()
+RETURNS INT
+DETERMINISTIC
+BEGIN
+
+    DECLARE done INT DEFAULT 0;
+    DECLARE sal INT;
+    DECLARE total INT DEFAULT 0;
+
+  
+    DECLARE cur CURSOR FOR
+        SELECT salary FROM Employee;
+
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+        SET done = 1;
+
+    
+    OPEN cur;
+
+    read_loop: LOOP
+
+       
+        FETCH cur INTO sal;
+
+        
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+
+       
+        SET total = total + sal;
+
+    END LOOP;
+
+   
+    CLOSE cur;
+
+    RETURN total;
+
+END //
+
+DELIMITER ;
+
+-- =========================================
+-- Call Function
+-- =========================================
+
+SELECT get_total_salary() AS Total_Salary;
